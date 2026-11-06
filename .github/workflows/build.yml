@@ -12,7 +12,9 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - uses: android-actions/setup-android@v3
+      # GitHub 的 ubuntu-latest 已预装 Android SDK，不再使用 setup-android（它在 sdkmanager 安装 tools 包时会失败）
+      - name: Accept Android licenses
+        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 8.7
